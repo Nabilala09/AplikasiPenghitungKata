@@ -1,3 +1,12 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -31,8 +40,43 @@ public class AplikasiPenghitungKataFrame extends javax.swing.JFrame {
     LParagraf.setText("Jumlah Paragraf: " + jumlahParagraf);
 }
     
+    private void hitungTeksManual() {
+    String teks = TIsiTulisan.getText();
+
+    int jumlahKata = teks.isEmpty() ? 0 : teks.trim().split("\\s+").length;
+
+    int jumlahKarakter = teks.length();
+
+    int jumlahKalimat = teks.split("[.!?]").length;
+
+    int jumlahParagraf = teks.split("\n\n").length;
+
+    LKata1.setText("Jumlah Kata: " + jumlahKata);
+    LKarakter1.setText("Jumlah Karakter: " + jumlahKarakter);
+    LKalimat1.setText("Jumlah Kalimat: " + jumlahKalimat);
+    LParagraf1.setText("Jumlah Paragraf: " + jumlahParagraf);
+}
+
+    
+    
     public AplikasiPenghitungKataFrame() {
         initComponents();
+        
+        TIsiTulisan.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+        public void insertUpdate(DocumentEvent e) {
+            hitungTeks();
+        }
+            @Override
+        public void removeUpdate(DocumentEvent e) {
+            hitungTeks();
+        }
+            @Override
+        public void changedUpdate(DocumentEvent e) {
+            }
+    });
+
+        
     }
 
     /**
@@ -56,6 +100,18 @@ public class AplikasiPenghitungKataFrame extends javax.swing.JFrame {
         LKarakter = new javax.swing.JLabel();
         LParagraf = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        LMencariKata = new javax.swing.JLabel();
+        TCari = new javax.swing.JTextField();
+        BCari = new javax.swing.JButton();
+        LHasilCari = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        LKata1 = new javax.swing.JLabel();
+        LKarakter1 = new javax.swing.JLabel();
+        LKalimat1 = new javax.swing.JLabel();
+        LParagraf1 = new javax.swing.JLabel();
+        THasilCari = new javax.swing.JTextField();
+        BSimpan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,43 +153,109 @@ public class AplikasiPenghitungKataFrame extends javax.swing.JFrame {
         LParagraf.setForeground(new java.awt.Color(255, 255, 255));
         LParagraf.setText("Jumlah Paragraf :");
 
+        LMencariKata.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LMencariKata.setForeground(new java.awt.Color(255, 255, 255));
+        LMencariKata.setText("Mencari Kata :");
+
+        TCari.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        BCari.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        BCari.setText("Cari");
+        BCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BCariActionPerformed(evt);
+            }
+        });
+
+        LHasilCari.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LHasilCari.setForeground(new java.awt.Color(255, 255, 255));
+        LHasilCari.setText("Hasil Pencarian :");
+
+        LKata1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LKata1.setForeground(new java.awt.Color(255, 255, 255));
+        LKata1.setText("Jumlah Kata :");
+
+        LKarakter1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LKarakter1.setForeground(new java.awt.Color(255, 255, 255));
+        LKarakter1.setText("Jumlah Karakter :");
+
+        LKalimat1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LKalimat1.setForeground(new java.awt.Color(255, 255, 255));
+        LKalimat1.setText("Jumlah Kalimat :");
+
+        LParagraf1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LParagraf1.setForeground(new java.awt.Color(255, 255, 255));
+        LParagraf1.setText("Jumlah Paragraf :");
+
+        THasilCari.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        BSimpan.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        BSimpan.setText("Simpan");
+        BSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BSimpanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addComponent(jSeparator2)
+            .addComponent(jSeparator3)
+            .addComponent(jSeparator4)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(108, 108, 108))))
-            .addComponent(jSeparator1)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(195, 195, 195))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel2))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LKata)
+                            .addComponent(LKarakter)
+                            .addComponent(LKalimat))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(LKata1)
+                        .addGap(30, 30, 30)
+                        .addComponent(LKarakter1)
+                        .addGap(34, 34, 34)
+                        .addComponent(LKalimat1)
+                        .addGap(47, 47, 47)
+                        .addComponent(LParagraf1)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LKata))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(LHasilCari)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(THasilCari))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(LMencariKata)
+                                .addGap(18, 18, 18)
+                                .addComponent(TCari, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LParagraf))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LKarakter))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LKalimat)))
-                .addContainerGap(54, Short.MAX_VALUE))
-            .addComponent(jSeparator2)
+                        .addComponent(LParagraf)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(BHitung, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BHitung, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BCari, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29))
         );
         jPanel1Layout.setVerticalGroup(
@@ -147,19 +269,41 @@ public class AplikasiPenghitungKataFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BHitung)
-                .addGap(10, 10, 10)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LKata1)
+                    .addComponent(LKarakter1)
+                    .addComponent(LKalimat1)
+                    .addComponent(LParagraf1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LKata)
                 .addGap(18, 18, 18)
                 .addComponent(LKarakter)
                 .addGap(18, 18, 18)
                 .addComponent(LKalimat)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LParagraf)
+                    .addComponent(BSimpan))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(LParagraf)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LMencariKata)
+                    .addComponent(TCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BCari)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LHasilCari)
+                    .addComponent(THasilCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,15 +314,58 @@ public class AplikasiPenghitungKataFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BHitungActionPerformed
-        hitungTeks();
+        hitungTeksManual();
     }//GEN-LAST:event_BHitungActionPerformed
+
+    private void BCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BCariActionPerformed
+        String teks = TIsiTulisan.getText();
+        String kataCari = TCari.getText().trim();
+
+        if (kataCari.isEmpty()) {
+            THasilCari.setText("Masukkan kata yang ingin dicari.");
+        return;
+    }
+        int jumlahKataDitemukan = 0;
+            String[] kataArray = teks.split("\\s+");
+        for (String kata : kataArray) {
+            if (kata.equalsIgnoreCase(kataCari)) {
+                jumlahKataDitemukan++;
+        }
+    }
+
+        THasilCari.setText("Kata '" + kataCari + "' ditemukan: " + jumlahKataDitemukan + " kali");
+    }//GEN-LAST:event_BCariActionPerformed
+
+    private void BSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BSimpanActionPerformed
+        String teks = TIsiTulisan.getText();
+        String hasil = "Teks Asli:\n" + teks + "\n\n" +
+            LKata.getText() + "\n" +
+            LKarakter.getText() + "\n" +
+            LKalimat.getText() + "\n" +
+            LParagraf.getText() + "\n";
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Simpan Hasil Perhitungan");
+    
+        int userSelection = fileChooser.showSaveDialog(this);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave))) {
+                writer.write(hasil);
+                JOptionPane.showMessageDialog(this, "Hasil berhasil disimpan ke file: " + fileToSave.getAbsolutePath());
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat menyimpan file: " + ex.getMessage());
+        }
+    }
+    }//GEN-LAST:event_BSimpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,11 +403,21 @@ public class AplikasiPenghitungKataFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BCari;
     private javax.swing.JButton BHitung;
+    private javax.swing.JButton BSimpan;
+    private javax.swing.JLabel LHasilCari;
     private javax.swing.JLabel LKalimat;
+    private javax.swing.JLabel LKalimat1;
     private javax.swing.JLabel LKarakter;
+    private javax.swing.JLabel LKarakter1;
     private javax.swing.JLabel LKata;
+    private javax.swing.JLabel LKata1;
+    private javax.swing.JLabel LMencariKata;
     private javax.swing.JLabel LParagraf;
+    private javax.swing.JLabel LParagraf1;
+    private javax.swing.JTextField TCari;
+    private javax.swing.JTextField THasilCari;
     private javax.swing.JTextArea TIsiTulisan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -228,5 +425,7 @@ public class AplikasiPenghitungKataFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     // End of variables declaration//GEN-END:variables
 }
